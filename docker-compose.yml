@@ -33,4 +33,4 @@ services:
       - 'POSTGRES_USER=postgres'
       - 'POSTGRES_PASSWORD=postgres'
       # localhost以外（Travis CI）につなぐので下記が必要
-      - 'POSTGRES_AUTH_METHOD=trust'
+      - 'POSTGRES_HOST_AUTH_METHOD=trust'

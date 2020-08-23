@@ -1,5 +1,5 @@
 # アクセス権設定
-sudo: requied
+sudo: required
 
 # Docker使います
 services: docker
