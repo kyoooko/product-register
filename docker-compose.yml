@@ -1,6 +1,6 @@
 version: '3'
 
-# ＊Docker volumeをここで作ってDB保管
+# ＊Docker volumeをDockerにここで作ってDB保管
 volumes:
   db-data:
 
