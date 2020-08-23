@@ -1,0 +1,34 @@
+version: '3'
+
+# ＊Docker volumeをここで作ってDB保管
+volumes:
+  db-data:
+
+services:
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/product-register'
+    # database.ymlで使った環境変数定義（HOSTでなくコンテナ内の環境変数）
+    environment:
+      - 'DATABASE_PASSWORD=postgres'
+    tty: true
+    stdin_open: true
+    # webのコンテナは下記のコンテナ（db）ができたらrunする=先にDBを作ってください
+    depends_on:
+      - db
+    # webからdbにアクセスできるようになる
+    links:
+      - db
+
+  db:
+    # Dockerfile作ってbuildでなくポスグレはすでにimageにあるのでimageをpullする
+    image: postgres
+    # コンテナ消えたらDBも消えてしまうため、/val/lib/postgresql/data（ポスグレのコンテナのDBが保管されているところ）のデータベースをHOSTのdb-data（＊）にマウンをする
+    volumes:
+      - 'db-data:/val/lib/postgresql/data'
+    environment:
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=postgres'
